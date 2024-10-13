@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Document</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="extractedFiles.length > 0">
+    <ion-item *ngFor="let file of extractedFiles">
+      <ion-label>
+        <h2>{{ file.fileName }}</h2>
+        
+         <ion-textarea
+          [(ngModel)]="file.text"
+          rows="5"
+          *ngIf="!file.error"
+          color="danger"
+        ></ion-textarea>
+
+        <ion-textarea
+          [(ngModel)]="file.text"
+          rows="5"
+          readonly
+          *ngIf="file.error"
+          color="danger"
+        ></ion-textarea>
+        
+        <p *ngIf="file.error" color="danger">Error: {{ file.error }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+      <input class="add-file" type="file" (change)="onFileSelected($event)" multiple accept="image/*"/>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+
